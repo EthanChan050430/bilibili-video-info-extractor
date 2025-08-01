@@ -8,8 +8,9 @@ import shutil
 import time
 import sys
 
+
 def get_video_info(bvid):
-    """[200~获取视频信息（标题和简介）"""
+    """获取视频信息（标题和简介）"""
     url = f"https://api.bilibili.com/x/web-interface/view?bvid={bvid}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -32,8 +33,9 @@ def get_video_info(bvid):
         print(f"获取视频信息失败: {str(e)}")
         return None, None
 
+
 def get_video_comments(bvid, max_comments=20):
-    """[200~获取视频评论"""
+    """获取视频评论"""
     # 获取视频aid
     url = f"https://api.bilibili.com/x/web-interface/view?bvid={bvid}"
     headers = {
@@ -74,8 +76,9 @@ def get_video_comments(bvid, max_comments=20):
         print(f"获取评论失败: {str(e)}")
         return "无法获取评论"
 
+
 def extract_bvid(video_url):
-    """[200~从URL中提取BVID - 更健壮的版本"""
+    """从URL中提取BVID - 更健壮的版本"""
     # 尝试直接匹配BV号
     bvid_match = re.search(r"BV[0-9A-Za-z]{10}", video_url)
     if bvid_match:
@@ -111,8 +114,9 @@ def extract_bvid(video_url):
 
     return None
 
+
 def install_yt_dlp():
-    """[200~自动安装yt-dlp"""
+    """自动安装yt-dlp"""
     try:
         print("正在安装yt-dlp...")
         subprocess.run([sys.executable, "-m", "pip", "install", "yt-dlp"], check=True)
@@ -122,8 +126,9 @@ def install_yt_dlp():
         print(f"自动安装失败: {e}")
         return False
 
+
 def download_ffmpeg():
-    """[200~下载ffmpeg到当前目录"""
+    """下载ffmpeg到当前目录"""
     try:
         print("正在下载ffmpeg...")
         # 下载ffmpeg便携版
@@ -157,8 +162,9 @@ def download_ffmpeg():
         print(f"ffmpeg下载失败: {e}")
         return False
 
+
 def download_yt_dlp_exe():
-    """[200~下载yt-dlp.exe到当前目录"""
+    """下载yt-dlp.exe到当前目录"""
     try:
         print("正在下载yt-dlp.exe...")
         url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe"
@@ -173,8 +179,9 @@ def download_yt_dlp_exe():
         print(f"下载失败: {e}")
         return False
 
+
 def audio_to_text(video_url):
-    """[200~使用本地语音识别转化音频（优化版）"""
+    """使用本地语音识别转换音频（优化版）"""
     try:
         # 检查是否安装了yt-dlp
         yt_dlp_path = shutil.which("yt-dlp")
@@ -262,6 +269,7 @@ def audio_to_text(video_url):
     except Exception as e:
         return f"处理失败: {str(e)}"
 
+
 def main():
     print("B站视频信息提取工具")
     video_url = input("请输入B站视频链接: ").strip()
@@ -314,6 +322,7 @@ def main():
             f.write(f"热门评论:\n{comments}\n\n")
             f.write(f"语音转文字结果:\n{audio_text}")
         print(f"结果已保存到 {filename}")
+
 
 if __name__ == "__main__":
     main()
